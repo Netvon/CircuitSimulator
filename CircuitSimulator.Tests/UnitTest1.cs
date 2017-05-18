@@ -95,5 +95,20 @@ OUT	:	PROBE		;");
 
 			n1.Step();
 		}
+
+		[TestMethod]
+		public void TestFactory()
+		{
+			var factory = new NodeFactory();
+
+			var node = factory.AddNodeType<And>()
+					.Create(nameof(And));
+
+			Assert.IsTrue(node is And);
+
+			var node2 = factory.Create("nope");
+
+			Assert.IsNull(node2);
+		}
 	}
 }
