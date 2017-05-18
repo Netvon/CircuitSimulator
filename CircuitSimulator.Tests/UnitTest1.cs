@@ -33,16 +33,19 @@ OUT	:	PROBE		;").ToDictionary(v => v.name, v => v.value);
 		}
 
 		[TestMethod]
-		public void TestMethod5()
+		public void TestCircuitParserException()
 		{
 			var parser = new CircuitParser();
-			var hallo = parser.ParseToDictionary(@"#A0:INPUT_HIGH;
+			
+
+			Assert.ThrowsException<CircuitParserException>(() =>
+			{
+				var hallo = parser.ParseToDictionary(@"#A0:INPUT_HIGH;
 # hallo
 A	::	INPUT_HIGH	;
 B	:	INPUT_LOW	;
 OUT	:	PROBE		;");
-
-			Assert.IsTrue(true);
+			});
 		}
 
 		//[TestMethod]

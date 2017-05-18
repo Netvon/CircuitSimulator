@@ -33,7 +33,7 @@ namespace CircuitSimulator.Core.Nodes
 		}
 	}
 
-	public class NotNode :  Node
+	public class NotNode : Node
 	{
 		public override void Step()
 		{
