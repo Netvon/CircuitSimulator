@@ -12,6 +12,7 @@ namespace CircuitSimulator.Core.Nodes
 
         protected List<NodeCurrent> InputValues = new List<NodeCurrent>();
 
+        public NodeCurrent value { get; set; } = NodeCurrent.None;
 
 
         public virtual void Step(NodeCurrent value)
