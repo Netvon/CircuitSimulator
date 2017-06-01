@@ -4,11 +4,46 @@ namespace CircuitSimulator.Core.Nodes
 {
     public class NorNode :  Node
 	{
-		public override void Step()
-		{
-			Value = Convert.ToInt32(!Convert.ToBoolean(Value.Value));
+        
+        //      (More inputs possible)
+        //      (Goes by the rule: 'If 1 input is high, output a low signal')
 
-			base.Step();
-		}
-	}
+        //      Input A  Input B  Output
+        //      0        0        1
+        //      0        1        0
+        //      1        0        0
+        //      1        1        0
+
+        public override void Step(NodeCurrent value)
+        {
+
+            processOutput(value);
+
+            base.Step(value);
+
+        }
+
+
+        protected virtual NodeCurrent processOutput(NodeCurrent value)
+        {
+            InputValues.Add(value);
+
+            NodeCurrent output = NodeCurrent.None;
+            foreach (NodeCurrent input in InputValues)
+            {
+                if (input == NodeCurrent.Low && output != NodeCurrent.Low)
+                {
+                    output = NodeCurrent.High;
+                }
+                else
+                {
+                    output = NodeCurrent.Low;
+                }
+
+            }
+
+            this.value = output;
+            return output;
+        }
+    }
 }

@@ -7,26 +7,46 @@ namespace CircuitSimulator.Core.Nodes
 {
 	public class AndNode : Node
 	{
-		//private ManualResetEvent mre = new ManualResetEvent(false);
 
-		//int? inputA = null;
-		//int? inputB = null;
+//      (More inputs possible)
+//      (Goes by the rule: 'If all inputs are high, output a high signal')
 
-		//public override void Apply(int input)
-		//{
-		//	if(!inputA.HasValue)
-		//	{
-		//		inputA = input;
-		//		return;
-		//	}
+//      Input A  Input B  Output
+//      0        0        0
+//      0        1        0
+//      1        0        0
+//      1        1        1
 
-		//	if (inputA.HasValue && !inputB.HasValue)
-		//	{
-		//		inputB = input;
+        public override void Step(NodeCurrent value)
+        {
+  
+            processOutput(value);
 
-		//		base.Apply(inputA.Value & inputB.Value);
-		//	}
-				
-		//}
-	}
+            base.Step(value);
+
+        }
+
+
+        protected virtual NodeCurrent processOutput(NodeCurrent value)
+        {
+            InputValues.Add(value);
+
+            NodeCurrent output = NodeCurrent.None;
+            foreach (NodeCurrent input in InputValues)
+            {
+                if(input == NodeCurrent.High && output != NodeCurrent.Low)
+                {
+                    output = NodeCurrent.High;
+                }
+                else
+                {
+                    output = NodeCurrent.Low;
+                }
+
+            }
+
+            this.value = output;
+            return output;
+        }
+    }
 }

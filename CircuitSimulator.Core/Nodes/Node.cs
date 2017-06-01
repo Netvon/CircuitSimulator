@@ -5,32 +5,40 @@ using System.Text;
 namespace CircuitSimulator.Core.Nodes
 {
     public abstract class Node
-	{
-		public string Name { get; set; }
+    {
+        public string Name { get; set; }
 
-		public Node OutputNode { get; set; }
+        protected List<Node> OutputNodes = new List<Node>();
 
-		int? value = null;
+        protected List<NodeCurrent> InputValues = new List<NodeCurrent>();
 
 
-		public int? Value
-		{
-			get => value;
 
-			set
-			{
-				if(value.HasValue)
-					this.value = Math.Max(0, Math.Min(1, value.Value));
-			}
+        public virtual void Step(NodeCurrent value)
+        {
+            if (value != NodeCurrent.High && value != NodeCurrent.Low)
+            {
+                // RECIEVED NONE VALUE, STOP ALL THE THINGS!
+                return;
+            }
+
+            if(InputValues.Count == OutputNodes.Count)
+            {
+                foreach (Node output in OutputNodes)
+                {
+                    output.Step(this.value);
+                }
+            }
 		}
 
-		public virtual void Step()
-		{
-			if(OutputNode != null)
-			{
-				OutputNode.Value = Value;
-				OutputNode.Step();
-			}
-		}
+        public void addOutput(Node output)
+        {
+            OutputNodes.Add(output);
+
+        }
+
+
+
+
 	}
 }

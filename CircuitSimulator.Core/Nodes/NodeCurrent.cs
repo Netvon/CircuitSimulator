@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CircuitSimulator.Core.Nodes
 {
-	enum NodeCurrent
+	public enum NodeCurrent
 	{
 		None,
 		High,

@@ -28,8 +28,7 @@ namespace CircuitSimulator.Core
 
 			if (first != null)
 			{
-				first.Value = 0;
-				first.Step();
+				first.Step(NodeCurrent.Low);
 			}
 		}
 
