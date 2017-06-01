@@ -4,13 +4,14 @@ using System.Text;
 
 namespace CircuitSimulator.Core.Nodes
 {
-	public abstract class Node
+    public abstract class Node
 	{
 		public string Name { get; set; }
 
 		public Node OutputNode { get; set; }
 
 		int? value = null;
+
 
 		public int? Value
 		{
@@ -30,16 +31,6 @@ namespace CircuitSimulator.Core.Nodes
 				OutputNode.Value = Value;
 				OutputNode.Step();
 			}
-		}
-	}
-
-	public class NotNode :  Node
-	{
-		public override void Step()
-		{
-			Value = Convert.ToInt32(!Convert.ToBoolean(Value.Value));
-
-			base.Step();
 		}
 	}
 }

@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace CircuitSimulator.Core.Nodes
 {
-	public class And : Node
+	public class AndNode : Node
 	{
 		//private ManualResetEvent mre = new ManualResetEvent(false);
 

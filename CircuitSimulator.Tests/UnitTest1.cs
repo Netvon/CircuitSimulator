@@ -101,10 +101,10 @@ OUT	:	PROBE		;");
 		{
 			var factory = new NodeFactory();
 
-			var node = factory.AddNodeType<And>()
-					.Create(nameof(And));
+			var node = factory.AddNodeType<AndNode>()
+					.Create(nameof(AndNode));
 
-			Assert.IsTrue(node is And);
+			Assert.IsTrue(node is AndNode);
 
 			var node2 = factory.Create("nope");
 

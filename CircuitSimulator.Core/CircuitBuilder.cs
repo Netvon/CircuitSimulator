@@ -40,7 +40,7 @@ namespace CircuitSimulator.Core
 		{
 			return AddNodeTypes(new[]
 			{
-				typeof(And),
+				typeof(AndNode),
 				typeof(NotNode)
 			});
 		}
