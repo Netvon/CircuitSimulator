@@ -27,7 +27,10 @@ namespace CircuitSimulator.Tests
 # hallo
 A	:	INPUT_HIGH	;
 B	:	INPUT_LOW	;
-OUT	:	PROBE		;").ToDictionary(v => v.name, v => v.value);
+OUT	:	PROBE		;
+
+B	:	A			;
+A	:	OUT			;").ToDictionary(v => v.name, v => v.value);
 
 			Assert.IsTrue(true);
 		}

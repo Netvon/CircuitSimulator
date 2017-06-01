@@ -34,26 +34,37 @@ namespace CircuitSimulator.Core
 		public IEnumerable<(string name, string value)> Parse(string lines)
 		{
 			var linesArr = lines.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+			var test = linesArr.TakeWhile(x => string.IsNullOrWhiteSpace(x)).ToArray();
 
-			foreach (var line in linesArr)
+			var sectionA = ParseSection(test);
+
+			return sectionA;
+
+			IEnumerable<(string name, string value)>ParseSection(string[] sectionLines)
 			{
-				if (line.StartsWith("#") || string.IsNullOrWhiteSpace(line))
-					continue;
-
-				var lineOut = ParseLine(line);
-
-				if (lineOut.HasValue)
+				foreach (var line in sectionLines)
 				{
-					yield return (lineOut?.name, lineOut?.value);
-				}
-				else
-				{
-					int index = Array.IndexOf(linesArr, line) + 1;
+					if (line.StartsWith("#"))
+						continue;
 
-					throw new CircuitParserException($"Circuit could not be Parsed. Error at line {index}")
+					if (string.IsNullOrWhiteSpace(line))
+						break;
+
+					var lineOut = ParseLine(line);
+
+					if (lineOut.HasValue)
 					{
-						Line = index
-					};
+						yield return (lineOut?.name, lineOut?.value);
+					}
+					else
+					{
+						int index = Array.IndexOf(linesArr, line) + 1;
+
+						throw new CircuitParserException($"Circuit could not be Parsed. Error at line {index}")
+						{
+							Line = index
+						};
+					}
 				}
 			}
 		}
