@@ -2,7 +2,7 @@
 
 namespace CircuitSimulator.Core
 {
-	internal class CircuitParserException : Exception
+	public class CircuitParserException : Exception
 	{
 		public int Line { get; set; }
 
