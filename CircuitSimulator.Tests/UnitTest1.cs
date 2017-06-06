@@ -51,30 +51,6 @@ OUT	:	PROBE		;");
 			});
 		}
 
-		//[TestMethod]
-		//public void TestMethod3()
-		//{
-		//	var and = new And
-		//	{
-		//		InputA = 1,
-		//		InputB = 1
-		//	};
-
-		//	Assert.AreEqual(0b1, and.Apply());
-		//}
-
-		[TestMethod]
-		public void TestMethod4()
-		{
-			//var v1 = InputNode.INPUT_HIGH;
-			//var v2 = InputNode.INPUT_HIGH;
-
-			//var and = new And();
-
-			//v1.Outputs.Add(and);
-			//v2.Outputs.Add(and);
-		}
-
 		[TestMethod]
 		public async Task TestMethod6()
 		{

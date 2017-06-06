@@ -8,9 +8,11 @@ namespace CircuitSimulator.Core.Nodes
     {
         public string Name { get; set; }
 
-        protected List<Node> OutputNodes = new List<Node>();
+        public List<Node> OutputNodes = new List<Node>();
 
-        protected List<NodeCurrent> InputValues = new List<NodeCurrent>();
+        public List<NodeCurrent> InputValues = new List<NodeCurrent>();
+
+        public int InputCount = 0;
 
         public NodeCurrent value { get; set; } = NodeCurrent.None;
 
@@ -23,7 +25,7 @@ namespace CircuitSimulator.Core.Nodes
                 return;
             }
 
-            if(InputValues.Count == OutputNodes.Count)
+            if(InputCount == OutputNodes.Count)
             {
                 foreach (Node output in OutputNodes)
                 {
@@ -35,8 +37,14 @@ namespace CircuitSimulator.Core.Nodes
         public void addOutput(Node output)
         {
             OutputNodes.Add(output);
-
+            output.connectedInput();
         }
+
+        public void connectedInput()
+        {
+            InputCount++;
+        }
+
 
 
 
