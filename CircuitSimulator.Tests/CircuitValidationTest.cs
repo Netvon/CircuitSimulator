@@ -28,9 +28,9 @@ namespace CircuitSimulator.Tests
             i2.addOutput(n1);
             n1.addOutput(o1);
 
-            var v = new CircuitValidator();
+            c.accept(new CircuitConnectionValidatorVisitor());
 
-            Assert.IsTrue(v.allNodesConnectedToOutput(c));
+            Assert.IsTrue(true);
 
         }
 
@@ -49,9 +49,11 @@ namespace CircuitSimulator.Tests
             i1.addOutput(n1);
             i2.addOutput(n1);
 
-            var v = new CircuitValidator();
 
-            Assert.IsFalse(v.allNodesConnectedToOutput(c));
+            Assert.ThrowsException<CircuitInvalidException>(() =>
+            {
+                c.accept(new CircuitConnectionValidatorVisitor());
+            });
 
         }
 
@@ -77,9 +79,11 @@ namespace CircuitSimulator.Tests
             n2.addOutput(n3);
             n3.addOutput(n1);
 
-            var v = new CircuitValidator();
 
-            Assert.IsFalse(v.notLooping(c));
+            Assert.ThrowsException<CircuitInvalidException>(() =>
+            {
+                c.accept(new CircuitLoopValidatorVisitor());
+            });
 
         }
 

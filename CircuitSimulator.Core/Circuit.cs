@@ -4,10 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CircuitSimulator.Core.Validators;
 
 namespace CircuitSimulator.Core
 {
-	public class Circuit
+	public class Circuit : IVisitable
 	{
 		public List<Node> nodes;
         public List<InputNode> inputNodes;
@@ -52,6 +53,11 @@ namespace CircuitSimulator.Core
 
 		}
 
-		public Node this[string name] => nodes.FirstOrDefault(x => x.Name.Equals(name));
+        public void accept(IVisitor visitor)
+        {
+            visitor.visit(this);
+        }
+
+        public Node this[string name] => nodes.FirstOrDefault(x => x.Name.Equals(name));
 	}
 }
