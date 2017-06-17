@@ -5,16 +5,11 @@ using System.Threading;
 
 namespace CircuitSimulator.Core.Nodes
 {
-	public class OutputNode : Node
-	{
-
-        public override void Step(NodeCurrent value)
+    public class OutputNode : Node
+    {
+        protected override NodeCurrent processOutput(NodeCurrent value)
         {
-
-            this.value = value;
-
+            return value;
         }
-
-
     }
 }

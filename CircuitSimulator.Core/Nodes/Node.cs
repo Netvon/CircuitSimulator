@@ -17,13 +17,20 @@ namespace CircuitSimulator.Core.Nodes
         public NodeCurrent value { get; set; } = NodeCurrent.None;
 
 
-        public virtual void Step(NodeCurrent value)
+        protected abstract NodeCurrent processOutput(NodeCurrent value);
+
+
+        public void Step(NodeCurrent value)
         {
             if (value != NodeCurrent.High && value != NodeCurrent.Low)
             {
                 // RECIEVED NONE VALUE, STOP ALL THE THINGS!
                 return;
             }
+
+        
+            processOutput(value);
+
 
             if(InputCount == OutputNodes.Count)
             {
@@ -46,7 +53,7 @@ namespace CircuitSimulator.Core.Nodes
         }
 
 
-
+        
 
 
 	}

@@ -17,17 +17,8 @@ namespace CircuitSimulator.Core.Nodes
 //      1        0        0
 //      1        1        1
 
-        public override void Step(NodeCurrent value)
-        {
-  
-            processOutput(value);
 
-            base.Step(value);
-
-        }
-
-
-        protected virtual NodeCurrent processOutput(NodeCurrent value)
+        protected override NodeCurrent processOutput(NodeCurrent value)
         {
             InputValues.Add(value);
 
