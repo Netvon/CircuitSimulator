@@ -28,17 +28,8 @@ namespace CircuitSimulator.Client
 		public MainWindow()
 		{
 			InitializeComponent();
-		}
 
-		private async void Button_Click(object sender, RoutedEventArgs e)
-		{
-			await Run();
-		}
-
-		private async Task Run()
-		{
-			ErrorLabel.Content = "";
-			GViewer viewer = new GViewer()
+			Viewer = new GViewer()
 			{
 				EdgeInsertButtonVisible = false,
 				NavigationVisible = false,
@@ -49,19 +40,22 @@ namespace CircuitSimulator.Client
 				ToolBarIsVisible = false,
 				BackColor = System.Drawing.Color.White
 			};
-			Graph graph = new Graph("graph");
 
+			FormsHost.Child = Viewer;
+		}
 
+		private async void Button_Click(object sender, RoutedEventArgs e)
+		{
+			await Run();
+		}
 
-			FormsHost.Child = viewer;
-			//Rectangle r = new Rectangle()
-			//{
-			//	Width = 10,
-			//	Height = 10,
-			//	Fill = Brushes.Gold
-			//};
+		public Circuit Circuit { get; set; }
+		public GViewer Viewer { get; set; }
 
-			//CircuitCanvas.Children.Add(r);
+		private async Task Run()
+		{
+			
+			ErrorLabel.Content = "";
 
 			var ofd = new OpenFileDialog();
 
@@ -69,36 +63,56 @@ namespace CircuitSimulator.Client
 			{
 				try
 				{
+					Inputs.Children.Clear();
+
 					var builder = new CircuitBuilder();
-					var circuit = await builder.AddDefaultNodes()
+					Circuit = await builder.AddDefaultNodes()
 							.AddFileSource(ofd.FileName)
 							.Build();
 
-					circuit.Accept(new CircuitLoopValidatorVisitor());
-					circuit.Accept(new CircuitConnectionValidatorVisitor());
+					Circuit.Accept(new CircuitLoopValidatorVisitor());
+					Circuit.Accept(new CircuitConnectionValidatorVisitor());
 
-					circuit.inputNodes.ForEach(inp =>
+					Circuit.inputNodes.ForEach(inp =>
 					{
-						Inputs.Children.Add(new CheckBox()
+						CheckBox checkBox = new CheckBox()
 						{
-							Content = inp.Name
-						});
+							Content = inp.Name,
+							IsChecked = inp.Value == Core.Nodes.NodeCurrent.High
+						};
+
+						checkBox.Checked += (s, e) =>
+						{
+							inp.Value = Core.Nodes.NodeCurrent.High;
+							StartAndDraw();
+						};
+
+						checkBox.Unchecked += (s, e) =>
+						{
+							inp.Value = Core.Nodes.NodeCurrent.Low;
+							StartAndDraw();
+						};
+						Inputs.Children.Add(checkBox);
 					});
 
-					circuit.Start();
-
-					circuit.Accept(new DrawVisitor(graph));
-					viewer.Graph = graph;
-
-
+					StartAndDraw();
 				}
 				catch (Exception ex)
 				{
 					ErrorLabel.Content = "Error bij het valideren: " + ex.Message;
-				} 
-
-				var g = "g";
+				}
 			}
+		}
+
+		void StartAndDraw()
+		{
+			Graph graph = new Graph("graph");
+
+			Circuit.Reset();
+			Circuit.Start();
+
+			Circuit.Accept(new DrawVisitor(graph));
+			Viewer.Graph = graph;
 		}
 	}
 }

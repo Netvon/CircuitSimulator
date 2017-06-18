@@ -60,6 +60,19 @@ namespace CircuitSimulator.Core
 
 		}
 
+		public void Reset()
+		{
+			foreach (var node in inputNodes)
+			{
+				node.InputValues.Clear();
+			}
+
+			foreach (var node in nodes.Union(outputNodes))
+			{
+				node.Reset();
+			}
+		}
+
         public void Accept(IVisitor visitor)
         {
             visitor.Visit(this);

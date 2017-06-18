@@ -49,6 +49,12 @@ namespace CircuitSimulator.Core.Nodes
             }
 		}
 
+		public void Reset()
+		{
+			Value = NodeCurrent.None;
+			InputValues.Clear();
+		}
+
         public void AddOutput(Node output)
         {
             OutputNodes.Add(output);
