@@ -27,9 +27,6 @@ namespace CircuitSimulator.Client
 
 		public void Visit(Circuit circuit)
 		{
-
-            circuit.Accept(new CircuitLoopValidatorVisitor());
-
             circuit.inputNodes.ForEach(node => AddEdges(node));
 		}
 
