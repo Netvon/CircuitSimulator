@@ -8,7 +8,7 @@
         Title="MainWindow" Height="350" Width="525">
 	<Grid>
 		<Button Content="Open File" Margin="10,10,0,0" Click="Button_Click" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
-		<Canvas x:Name="CircuitCanvas" Margin="10,43,10,10"/>
+		<WindowsFormsHost x:Name="FormsHost" Margin="10,43,10,10"/>
 
 
 	</Grid>

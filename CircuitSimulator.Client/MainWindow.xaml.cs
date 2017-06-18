@@ -1,4 +1,6 @@
 ﻿using CircuitSimulator.Core;
+using Microsoft.Msagl.Drawing;
+using Microsoft.Msagl.GraphViewerGdi;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -30,7 +32,22 @@ namespace CircuitSimulator.Client
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
-			CircuitCanvas.Children.Clear();
+			GViewer viewer = new GViewer()
+			{
+				EdgeInsertButtonVisible = false,
+				NavigationVisible = false,
+				LayoutEditingEnabled = false,
+				LayoutAlgorithmSettingsButtonVisible = false,
+				InsertingEdge = false,
+				UndoRedoButtonsVisible = false,
+				ToolBarIsVisible = false,
+				BackColor = System.Drawing.Color.White
+			};
+			Graph graph = new Graph("graph");
+
+			
+
+			FormsHost.Child = viewer;
 			//Rectangle r = new Rectangle()
 			//{
 			//	Width = 10,
@@ -49,8 +66,10 @@ namespace CircuitSimulator.Client
 						.AddFileSource(ofd.FileName)
 						.Build();
 
-				//circuit.Accept(new CircuitConnectionValidatorVisitor());
-				circuit.Accept(new DrawVisitor(CircuitCanvas));
+				circuit.Accept(new CircuitConnectionValidatorVisitor());
+				//circuit.Accept(new CircuitLoopValidatorVisitor());
+				circuit.Accept(new DrawVisitor(graph));
+				viewer.Graph = graph;
 
 				circuit.Start();
 

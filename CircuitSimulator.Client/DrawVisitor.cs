@@ -9,71 +9,35 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using CircuitSimulator.Core.Nodes;
+using Microsoft.Msagl.Drawing;
 
 namespace CircuitSimulator.Client
 {
 	class DrawVisitor : IVisitor
 	{
-		public Canvas Canvas { get; set; }
+		public Graph Canvas { get; set; }
 
-		public Dictionary<Node, Grid> Drawn { get; set; }
-		public DrawVisitor(Canvas canvas)
+		public Dictionary<Core.Nodes.Node, Microsoft.Msagl.Drawing.Node> Drawn { get; set; }
+		public DrawVisitor(Graph canvas)
 		{
 			Canvas = canvas;
 
-			Drawn = new Dictionary<Node, Grid>();
+			Drawn = new Dictionary<Core.Nodes.Node, Microsoft.Msagl.Drawing.Node>();
 		}
 
 		public void Visit(Circuit circuit)
 		{
-			int level = 0;
-			circuit.inputNodes.ForEach(node =>
-			{
-				DrawNode(circuit.inputNodes.Select(x => x as Node).ToList(), node, level);
-
-				node.OutputNodes.ForEach(nodeLvl2 =>
-				{
-					DrawNode(node.OutputNodes, nodeLvl2, level + 1);
-				});
-			});
+			circuit.inputNodes.ForEach(node => AddEdges(node));
 		}
 
-		private void DrawNode(List<Node> source, Node node, int level)
+		void AddEdges(Core.Nodes.Node n)
 		{
-			if (Drawn.ContainsKey(node))
-				return;
-
-			Grid g = new Grid()
+			n.OutputNodes.ForEach(node =>
 			{
-				Width = 32,
-				Height = 32
-			};
+				Canvas.AddEdge(n.Name, node.Name);
 
-			Label label = new Label()
-			{
-				Content = node.Name
-			};
-
-			if (node.Value == NodeCurrent.Low)
-			{
-				label.Background = Brushes.LightBlue;
-			}
-			else if (node.Value == NodeCurrent.High)
-			{
-				label.Background = Brushes.PaleVioletRed;
-			} else
-			{
-				label.Background = Brushes.LightGray;
-			}
-
-			g.Children.Add(label);
-
-			int index = source.IndexOf(node);
-			Canvas.SetTop(g, 32 * index + (16 * index));
-			Canvas.SetLeft(g, 32 * level + (32 * level));
-
-			Canvas.Children.Add(g);
-			Drawn.Add(node, g);
+				AddEdges(node);
+			});
 		}
 	}
 }
