@@ -9,11 +9,12 @@ namespace CircuitSimulator.Core.Nodes
     {
 		public InputNode()
 		{
-
+			InputCount = 1;
 		}
 
 		public InputNode(string name) : base(name)
 		{
+			InputCount = 1;
 		}
 
 		protected override NodeCurrent ProcessOutput(NodeCurrent value)

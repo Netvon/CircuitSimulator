@@ -18,6 +18,7 @@ namespace CircuitSimulator.Core.Nodes
 
 		protected override NodeCurrent ProcessOutput(NodeCurrent value)
         {
+			Value = value;
             return value;
         }
     }

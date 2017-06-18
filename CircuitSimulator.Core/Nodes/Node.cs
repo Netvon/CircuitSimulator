@@ -38,11 +38,11 @@ namespace CircuitSimulator.Core.Nodes
 
             InputValues.Add(value);
 
-            ProcessOutput(value);
-
             if(InputCount == InputValues.Count)
             {
-                foreach (Node output in OutputNodes)
+				ProcessOutput(value);
+
+				foreach (Node output in OutputNodes)
                 {
                     output.Step(Value);
                 }

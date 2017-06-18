@@ -49,6 +49,17 @@ namespace CircuitSimulator.Client
 							edge.SourceNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightBlue;
 							break;
 					}
+
+					switch (n)
+					{
+						case Core.Nodes.Node input when input.Value == NodeCurrent.High:
+							edge.TargetNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleVioletRed;
+							break;
+
+						case Core.Nodes.Node input when input.Value == NodeCurrent.Low:
+							edge.TargetNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightBlue;
+							break;
+					}
 				}
 
 				AddEdges(node);
