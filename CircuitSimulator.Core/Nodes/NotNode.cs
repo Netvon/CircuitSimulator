@@ -24,7 +24,6 @@ namespace CircuitSimulator.Core.Nodes
 
 		protected override NodeCurrent ProcessOutput(NodeCurrent value)
         {
-            InputValues.Add(value);
 
             NodeCurrent output = NodeCurrent.None;
             
