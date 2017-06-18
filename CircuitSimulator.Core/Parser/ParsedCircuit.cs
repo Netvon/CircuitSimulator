@@ -12,5 +12,10 @@ namespace CircuitSimulator.Core.Parser
 		{
 			Nodes.Find(node => node.Name == nodeA).Connections.Add(nodeB);
 		}
+
+		public ParsedNode Find(string name)
+		{
+			return Nodes.Find(node => node.Name == name);
+		}
 	}
 }

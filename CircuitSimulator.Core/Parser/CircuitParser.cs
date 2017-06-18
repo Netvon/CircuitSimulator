@@ -68,7 +68,7 @@ namespace CircuitSimulator.Core.Parser
 
 		public (string name, string value)? ParseLine(string line)
 		{
-			var match = Regex.Match(line, @"([\w]+(?=\s*:))\s*:\s*([\w]+(?=\s*;))");
+			var match = Regex.Match(line, @"([\w]+(?=\s*:))\s*:\s*([\w,]+(?=\s*;))");
 
 			if(match.Success && match.Groups.Count == 3)
 			{

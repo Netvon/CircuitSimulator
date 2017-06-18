@@ -6,6 +6,16 @@ namespace CircuitSimulator.Core.Nodes
 {
     public abstract class Node
     {
+		public Node()
+		{
+
+		}
+
+		public Node(string name)
+		{
+			Name = name;
+		}
+
         public string Name { get; set; }
 
         public List<Node> OutputNodes = new List<Node>();

@@ -19,7 +19,7 @@ namespace CircuitSimulator.Core
 
 		StorageType storageType;
 		string storageSource;
-		HashSet<Type> nodeTypes = new HashSet<Type>();
+		Dictionary<string, Type> nodeTypes = new Dictionary<string, Type>();
 
 		public CircuitBuilder AddFileSource(string path)
 		{
@@ -41,48 +41,109 @@ namespace CircuitSimulator.Core
 		{
 			return AddNodeTypes(new[]
 			{
-				typeof(AndNode),
-				typeof(InputNode),
-				typeof(NandNode),
-				typeof(NorNode),
-				typeof(NotNode),
-				typeof(OrNode),
-				typeof(OutputNode),
-				typeof(XorNode)
+				("and", typeof(AndNode)),
+				("input_high", typeof(InputNode)),
+				("input_low", typeof(InputNode)),
+				("nand", typeof(NandNode)),
+				("nor", typeof(NorNode)),
+				("not", typeof(NotNode)),
+				("or", typeof(OrNode)),
+				("probe", typeof(OutputNode)),
+				("xor", typeof(XorNode))
 			});
 		}
 
-		public CircuitBuilder AddNodeTypes(IEnumerable<Type> types)
+		public CircuitBuilder AddNodeTypes(
+			IEnumerable<(string selector, Type type)> types
+		)
 		{
-			foreach (var type in types.Where(t => t.GetTypeInfo().IsSubclassOf(typeof(Node))))
+			foreach (var type in types.Where(t => t.type.GetTypeInfo().IsSubclassOf(typeof(Node))))
 			{
-				nodeTypes.Add(type);
+				nodeTypes.Add(type.selector, type.type);
 			}
 
 			return this;
 		}
 
-		public Task<ParsedCircuit> Build()
+		public async Task<Circuit> Build()
 		{
+			var circuit = new Circuit();
+			ParsedCircuit parsedCircuit = null;
+
 			switch (storageType)
 			{
 				case StorageType.Memory:
-					return BuildFromMemory();
+					parsedCircuit = await BuildFromMemory();
+					break;
 				case StorageType.File:
-					return BuildFromFile();
+					parsedCircuit = await BuildFromFile();
+					break;
 				default:
 					throw new Exception("No Source was Added");
 			}
+
+			CreateNodes(parsedCircuit);
+
+			return circuit;
 
 			Task<ParsedCircuit> BuildFromMemory()
 			{
 				return Task.FromResult(new CircuitParser().Parse(storageSource));
 			}
 
-			Task<ParsedCircuit> BuildFromFile()
+			async Task<ParsedCircuit> BuildFromFile()
 			{
-				return new CircuitParser()
-							.LoadFile(storageSource);
+				return await new CircuitParser().LoadFile(storageSource);
+				
+			}
+
+			void CreateNodes(ParsedCircuit parsed)
+			{
+				var nodes = parsed.Nodes.Select(node =>
+				{
+					if (nodeTypes.TryGetValue(node.Value.ToLower(), out var type))
+						return Activator.CreateInstance(type, new[] { node.Name }) as Node;
+
+					return null;
+				}).ToList();
+
+				foreach (var node in nodes)
+				{
+					switch(node)
+					{
+						case InputNode n:
+							Enum.TryParse<NodeCurrent>(
+								parsed.Find(n.Name).Value.ToLower().Replace("input_", ""),
+								ignoreCase: true,
+								result: out var current);
+
+							circuit.AddInput(n, current);
+							break;
+
+						case OutputNode n:
+							circuit.AddOutput(n);
+							break;
+
+						case Node n:
+							circuit.Add(n);
+							break;
+					}
+				}
+
+				foreach (var node in parsed.Nodes)
+				{
+					var nodeA = circuit.Find(node.Name);
+
+					if (nodeA != null) { 
+						node.Connections.ForEach(x =>
+						{
+							var nodeB = circuit.Find(x);
+							if (nodeB != null)
+								nodeA.AddOutput(nodeB);
+						});
+					}
+					
+				}
 			}
 		}
 	}

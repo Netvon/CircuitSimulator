@@ -7,18 +7,26 @@ namespace CircuitSimulator.Core.Nodes
 {
 	public class AndNode : Node
 	{
+		public AndNode()
+		{
 
-//      (More inputs possible)
-//      (Goes by the rule: 'If all inputs are high, output a high signal')
+		}
 
-//      Input A  Input B  Output
-//      0        0        0
-//      0        1        0
-//      1        0        0
-//      1        1        1
+		public AndNode(string name) : base(name)
+		{
+		}
+
+		//      (More inputs possible)
+		//      (Goes by the rule: 'If all inputs are high, output a high signal')
+
+		//      Input A  Input B  Output
+		//      0        0        0
+		//      0        1        0
+		//      1        0        0
+		//      1        1        1
 
 
-        protected override NodeCurrent ProcessOutput(NodeCurrent value)
+		protected override NodeCurrent ProcessOutput(NodeCurrent value)
         {
             InputValues.Add(value);
 

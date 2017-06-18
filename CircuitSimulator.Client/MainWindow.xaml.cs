@@ -22,6 +22,7 @@ namespace CircuitSimulator.Client
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -29,17 +30,29 @@ namespace CircuitSimulator.Client
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
+			//Rectangle r = new Rectangle()
+			//{
+			//	Width = 10,
+			//	Height = 10,
+			//	Fill = Brushes.Gold
+			//};
+
+			//CircuitCanvas.Children.Add(r);
+
 			var ofd = new OpenFileDialog();
 
-			if ( ofd.ShowDialog() == true )
+			if (ofd.ShowDialog() == true)
 			{
 				var builder = new CircuitBuilder();
-				var buuilt = await builder.AddDefaultNodes()
+				var circuit = await builder.AddDefaultNodes()
 						.AddFileSource(ofd.FileName)
 						.Build();
 
-				var h = 'h';
+				circuit.Accept(new CircuitConnectionValidatorVisitor());
+				circuit.Accept(new CircuitLoopValidatorVisitor());
 			}
+
+
 		}
 	}
 }

@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
 	<Grid>
-		<Button Content="Open File" HorizontalAlignment="Right" Margin="0,0,432,289" VerticalAlignment="Bottom" Width="75" Click="Button_Click"/>
+		<Button Content="Open File" Margin="10,10,0,0" Click="Button_Click" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
+		<Canvas x:Name="CircuitCanvas" Margin="10,43,10,10"/>
+
 
 	</Grid>
 </Window>

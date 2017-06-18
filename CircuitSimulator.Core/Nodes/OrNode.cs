@@ -4,18 +4,26 @@ namespace CircuitSimulator.Core.Nodes
 {
     public class OrNode :  Node
 	{
+		public OrNode()
+		{
 
-        //      (More inputs possible)
-        //      (Goes by the rule: 'If 1 input is high, output a high signal')
+		}
 
-        //      Input A  Input B  Output
-        //      0        0        0
-        //      0        1        1
-        //      1        0        1
-        //      1        1        1
+		public OrNode(string name) : base(name)
+		{
+		}
+
+		//      (More inputs possible)
+		//      (Goes by the rule: 'If 1 input is high, output a high signal')
+
+		//      Input A  Input B  Output
+		//      0        0        0
+		//      0        1        1
+		//      1        0        1
+		//      1        1        1
 
 
-        protected override NodeCurrent ProcessOutput(NodeCurrent value)
+		protected override NodeCurrent ProcessOutput(NodeCurrent value)
         {
             InputValues.Add(value);
 

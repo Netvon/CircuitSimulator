@@ -4,18 +4,26 @@ namespace CircuitSimulator.Core.Nodes
 {
     public class NorNode :  Node
 	{
-        
-        //      (More inputs possible)
-        //      (Goes by the rule: 'If 1 input is high, output a low signal')
+		public NorNode()
+		{
 
-        //      Input A  Input B  Output
-        //      0        0        1
-        //      0        1        0
-        //      1        0        0
-        //      1        1        0
+		}
+
+		public NorNode(string name) : base(name)
+		{
+		}
+
+		//      (More inputs possible)
+		//      (Goes by the rule: 'If 1 input is high, output a low signal')
+
+		//      Input A  Input B  Output
+		//      0        0        1
+		//      0        1        0
+		//      1        0        0
+		//      1        1        0
 
 
-        protected override NodeCurrent ProcessOutput(NodeCurrent value)
+		protected override NodeCurrent ProcessOutput(NodeCurrent value)
         {
             InputValues.Add(value);
 

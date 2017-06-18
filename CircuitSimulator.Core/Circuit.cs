@@ -22,6 +22,13 @@ namespace CircuitSimulator.Core
             outputNodes = new List<OutputNode>();
         }
 
+		public Node Find(string name)
+		{
+			return (nodes.FirstOrDefault(x => x.Name == name) ??
+				   inputNodes.FirstOrDefault(x => x.Name == name)) ??
+				   outputNodes.FirstOrDefault(x => x.Name == name);
+		}
+
 		public Circuit Add(Node node)
 		{
 			nodes?.Add(node);

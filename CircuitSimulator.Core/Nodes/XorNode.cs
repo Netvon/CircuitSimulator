@@ -4,18 +4,26 @@ namespace CircuitSimulator.Core.Nodes
 {
     public class XorNode :  Node
 	{
+		public XorNode()
+		{
 
-        //      (More inputs possible)
-        //      (Goes by the rule: 'If all inputs are high or if all inputs are low, output a high signal')
+		}
 
-        //      Input A  Input B  Output
-        //      0        0        1
-        //      0        1        0
-        //      1        0        0
-        //      1        1        1
+		public XorNode(string name) : base(name)
+		{
+		}
+
+		//      (More inputs possible)
+		//      (Goes by the rule: 'If all inputs are high or if all inputs are low, output a high signal')
+
+		//      Input A  Input B  Output
+		//      0        0        1
+		//      0        1        0
+		//      1        0        0
+		//      1        1        1
 
 
-        protected override NodeCurrent ProcessOutput(NodeCurrent value)
+		protected override NodeCurrent ProcessOutput(NodeCurrent value)
         {
             InputValues.Add(value);
 
