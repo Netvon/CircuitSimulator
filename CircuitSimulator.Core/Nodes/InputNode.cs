@@ -7,7 +7,7 @@ namespace CircuitSimulator.Core.Nodes
 {
     public class InputNode : Node
     {
-        protected override NodeCurrent processOutput(NodeCurrent value)
+        protected override NodeCurrent ProcessOutput(NodeCurrent value)
         {
             return value;
         }

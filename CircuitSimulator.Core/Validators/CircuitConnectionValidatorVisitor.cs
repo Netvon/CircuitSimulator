@@ -15,7 +15,7 @@ namespace CircuitSimulator.Core
         // Don't call this validator before the circuit is checked for loops, or it will keep looping...
 
 
-        public void visit(Circuit circuit)
+        public void Visit(Circuit circuit)
         {
 
             if (circuit == null)

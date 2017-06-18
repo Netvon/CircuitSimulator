@@ -7,7 +7,7 @@ namespace CircuitSimulator.Core.Validators
     public interface IVisitor
     {
 
-        void visit(Circuit circuit);
+        void Visit(Circuit circuit);
 
     }
 }

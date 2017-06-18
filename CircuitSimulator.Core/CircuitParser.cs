@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Linq;
+using CircuitSimulator.Core.Nodes;
 
 namespace CircuitSimulator.Core
 {
@@ -34,11 +35,32 @@ namespace CircuitSimulator.Core
 		public IEnumerable<(string name, string value)> Parse(string lines)
 		{
 			var linesArr = lines.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-			var test = linesArr.TakeWhile(x => string.IsNullOrWhiteSpace(x)).ToArray();
+			var test = linesArr.TakeWhile(x => !string.IsNullOrWhiteSpace(x));
+			var test2 = linesArr.Except(test).Where(x => !string.IsNullOrWhiteSpace(x));
 
-			var sectionA = ParseSection(test);
+			var sectionA = ParseSection(test.ToArray());
 
-			return sectionA;
+			var c = new Circuit();
+
+			foreach (var node in sectionA)
+			{
+				if (node.value.StartsWith("INPUT_", StringComparison.OrdinalIgnoreCase))
+				{
+					var current = node.value.ToLower().Replace("input_", "");
+					if (Enum.TryParse<NodeCurrent>(current, true, out var newCurrent))
+					{
+						c.AddInput(new InputNode() { Name = node.name }, newCurrent);
+					}
+				}
+				else if (node.value.Equals("PROBE", StringComparison.OrdinalIgnoreCase))
+				{
+					c.AddOutput(new OutputNode() { Name = node.name });
+				}
+			}
+
+			var sectionB = ParseSection(test2.ToArray());
+
+			return null;
 
 			IEnumerable<(string name, string value)>ParseSection(string[] sectionLines)
 			{

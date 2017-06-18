@@ -31,10 +31,10 @@ namespace CircuitSimulator.Tests
             a4.Step(NodeCurrent.High);
             a4.Step(NodeCurrent.High);
 
-            Assert.IsTrue(a1.value == NodeCurrent.Low);
-            Assert.IsTrue(a2.value == NodeCurrent.Low);
-            Assert.IsTrue(a3.value == NodeCurrent.Low);
-            Assert.IsTrue(a4.value == NodeCurrent.High);
+            Assert.IsTrue(a1.Value == NodeCurrent.Low);
+            Assert.IsTrue(a2.Value == NodeCurrent.Low);
+            Assert.IsTrue(a3.Value == NodeCurrent.Low);
+            Assert.IsTrue(a4.Value == NodeCurrent.High);
         }
 
         [TestMethod]
@@ -57,10 +57,10 @@ namespace CircuitSimulator.Tests
             a4.Step(NodeCurrent.High);
             a4.Step(NodeCurrent.High);
 
-            Assert.IsTrue(a1.value == NodeCurrent.High);
-            Assert.IsTrue(a2.value == NodeCurrent.High);
-            Assert.IsTrue(a3.value == NodeCurrent.High);
-            Assert.IsTrue(a4.value == NodeCurrent.Low);
+            Assert.IsTrue(a1.Value == NodeCurrent.High);
+            Assert.IsTrue(a2.Value == NodeCurrent.High);
+            Assert.IsTrue(a3.Value == NodeCurrent.High);
+            Assert.IsTrue(a4.Value == NodeCurrent.Low);
         }
 
         [TestMethod]
@@ -83,10 +83,10 @@ namespace CircuitSimulator.Tests
             a4.Step(NodeCurrent.High);
             a4.Step(NodeCurrent.High);
 
-            Assert.IsTrue(a1.value == NodeCurrent.Low);
-            Assert.IsTrue(a2.value == NodeCurrent.High);
-            Assert.IsTrue(a3.value == NodeCurrent.High);
-            Assert.IsTrue(a4.value == NodeCurrent.High);
+            Assert.IsTrue(a1.Value == NodeCurrent.Low);
+            Assert.IsTrue(a2.Value == NodeCurrent.High);
+            Assert.IsTrue(a3.Value == NodeCurrent.High);
+            Assert.IsTrue(a4.Value == NodeCurrent.High);
         }
 
         [TestMethod]
@@ -109,10 +109,10 @@ namespace CircuitSimulator.Tests
             a4.Step(NodeCurrent.High);
             a4.Step(NodeCurrent.High);
 
-            Assert.IsTrue(a1.value == NodeCurrent.High);
-            Assert.IsTrue(a2.value == NodeCurrent.Low);
-            Assert.IsTrue(a3.value == NodeCurrent.Low);
-            Assert.IsTrue(a4.value == NodeCurrent.Low);
+            Assert.IsTrue(a1.Value == NodeCurrent.High);
+            Assert.IsTrue(a2.Value == NodeCurrent.Low);
+            Assert.IsTrue(a3.Value == NodeCurrent.Low);
+            Assert.IsTrue(a4.Value == NodeCurrent.Low);
         }
 
         [TestMethod]
@@ -135,10 +135,10 @@ namespace CircuitSimulator.Tests
             a4.Step(NodeCurrent.High);
             a4.Step(NodeCurrent.High);
 
-            Assert.IsTrue(a1.value == NodeCurrent.High);
-            Assert.IsTrue(a2.value == NodeCurrent.Low);
-            Assert.IsTrue(a3.value == NodeCurrent.Low);
-            Assert.IsTrue(a4.value == NodeCurrent.High);
+            Assert.IsTrue(a1.Value == NodeCurrent.High);
+            Assert.IsTrue(a2.Value == NodeCurrent.Low);
+            Assert.IsTrue(a3.Value == NodeCurrent.Low);
+            Assert.IsTrue(a4.Value == NodeCurrent.High);
         }
 
         [TestMethod]
@@ -150,8 +150,8 @@ namespace CircuitSimulator.Tests
             a1.Step(NodeCurrent.Low);
             a2.Step(NodeCurrent.High);
 
-            Assert.IsTrue(a1.value == NodeCurrent.High);
-            Assert.IsTrue(a2.value == NodeCurrent.Low);
+            Assert.IsTrue(a1.Value == NodeCurrent.High);
+            Assert.IsTrue(a2.Value == NodeCurrent.Low);
         }
 
 	}

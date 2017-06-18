@@ -31,7 +31,7 @@ namespace CircuitSimulator.Core
 
         public Circuit AddInput(InputNode node, NodeCurrent value)
         {
-            node.value = value;
+            node.Value = value;
             inputNodes?.Add(node);
 
             return this;
@@ -48,14 +48,14 @@ namespace CircuitSimulator.Core
 		{
             foreach (var input in inputNodes)
             {
-                input.Step(input.value);
+                input.Step(input.Value);
             }
 
 		}
 
-        public void accept(IVisitor visitor)
+        public void Accept(IVisitor visitor)
         {
-            visitor.visit(this);
+            visitor.Visit(this);
         }
 
         public Node this[string name] => nodes.FirstOrDefault(x => x.Name.Equals(name));

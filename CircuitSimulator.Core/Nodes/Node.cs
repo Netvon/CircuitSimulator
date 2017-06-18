@@ -14,11 +14,9 @@ namespace CircuitSimulator.Core.Nodes
 
         public int InputCount = 0;
 
-        public NodeCurrent value { get; set; } = NodeCurrent.None;
+        public NodeCurrent Value { get; set; } = NodeCurrent.None;
 
-
-        protected abstract NodeCurrent processOutput(NodeCurrent value);
-
+        protected abstract NodeCurrent ProcessOutput(NodeCurrent value);
 
         public void Step(NodeCurrent value)
         {
@@ -28,33 +26,27 @@ namespace CircuitSimulator.Core.Nodes
                 return;
             }
 
-        
-            processOutput(value);
-
+            ProcessOutput(value);
 
             if(InputCount == OutputNodes.Count)
             {
                 foreach (Node output in OutputNodes)
                 {
-                    output.Step(this.value);
+                    output.Step(Value);
                 }
             }
 		}
 
-        public void addOutput(Node output)
+        public void AddOutput(Node output)
         {
             OutputNodes.Add(output);
-            output.connectedInput();
+            output.ConnectedInput();
         }
 
-        public void connectedInput()
+        public void ConnectedInput()
         {
             InputCount++;
         }
-
-
-        
-
 
 	}
 }

@@ -24,11 +24,11 @@ namespace CircuitSimulator.Tests
             c.AddInput(i1, NodeCurrent.None);
             c.AddInput(i2, NodeCurrent.None);
 
-            i1.addOutput(n1);
-            i2.addOutput(n1);
-            n1.addOutput(o1);
+            i1.AddOutput(n1);
+            i2.AddOutput(n1);
+            n1.AddOutput(o1);
 
-            c.accept(new CircuitConnectionValidatorVisitor());
+            c.Accept(new CircuitConnectionValidatorVisitor());
 
             Assert.IsTrue(true);
 
@@ -46,13 +46,13 @@ namespace CircuitSimulator.Tests
             c.AddInput(i1, NodeCurrent.None);
             c.AddInput(i2, NodeCurrent.None);
 
-            i1.addOutput(n1);
-            i2.addOutput(n1);
+            i1.AddOutput(n1);
+            i2.AddOutput(n1);
 
 
             Assert.ThrowsException<CircuitInvalidException>(() =>
             {
-                c.accept(new CircuitConnectionValidatorVisitor());
+                c.Accept(new CircuitConnectionValidatorVisitor());
             });
 
         }
@@ -74,15 +74,15 @@ namespace CircuitSimulator.Tests
             c.Add(n2);
             c.Add(n3);
 
-            i1.addOutput(n1);
-            n1.addOutput(n2);
-            n2.addOutput(n3);
-            n3.addOutput(n1);
+            i1.AddOutput(n1);
+            n1.AddOutput(n2);
+            n2.AddOutput(n3);
+            n3.AddOutput(n1);
 
 
             Assert.ThrowsException<CircuitInvalidException>(() =>
             {
-                c.accept(new CircuitLoopValidatorVisitor());
+                c.Accept(new CircuitLoopValidatorVisitor());
             });
 
         }

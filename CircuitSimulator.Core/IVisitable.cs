@@ -8,6 +8,6 @@ namespace CircuitSimulator.Core
     public interface IVisitable
     {
 
-        void accept(IVisitor visitor);
+        void Accept(IVisitor visitor);
     }
 }

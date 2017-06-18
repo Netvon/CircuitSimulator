@@ -16,7 +16,7 @@ namespace CircuitSimulator.Core
 
 
 
-        public void visit(Circuit circuit)
+        public void Visit(Circuit circuit)
         {
 
             if (circuit == null)
