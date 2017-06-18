@@ -30,6 +30,7 @@ namespace CircuitSimulator.Client
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
+			CircuitCanvas.Children.Clear();
 			//Rectangle r = new Rectangle()
 			//{
 			//	Width = 10,
@@ -48,8 +49,12 @@ namespace CircuitSimulator.Client
 						.AddFileSource(ofd.FileName)
 						.Build();
 
-				circuit.Accept(new CircuitConnectionValidatorVisitor());
-				circuit.Accept(new CircuitLoopValidatorVisitor());
+				//circuit.Accept(new CircuitConnectionValidatorVisitor());
+				circuit.Accept(new DrawVisitor(CircuitCanvas));
+
+				circuit.Start();
+
+				var g =  "g";
 			}
 
 
