@@ -32,6 +32,7 @@ namespace CircuitSimulator.Client
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
+			ErrorLabel.Content = "";
 			GViewer viewer = new GViewer()
 			{
 				EdgeInsertButtonVisible = false,
