@@ -17,12 +17,12 @@ namespace CircuitSimulator.Client
 	{
 		public Graph Canvas { get; set; }
 
-		public Dictionary<Core.Nodes.Node, Microsoft.Msagl.Drawing.Node> Drawn { get; set; }
+		public HashSet<string> Drawn { get; set; }
 		public DrawVisitor(Graph canvas)
 		{
 			Canvas = canvas;
 
-			Drawn = new Dictionary<Core.Nodes.Node, Microsoft.Msagl.Drawing.Node>();
+			Drawn = new HashSet<string>();
 		}
 
 		public void Visit(Circuit circuit)
@@ -34,7 +34,17 @@ namespace CircuitSimulator.Client
 		{
 			n.OutputNodes.ForEach(node =>
 			{
-				Canvas.AddEdge(n.Name, node.Name);
+				if( !Drawn.Contains($"{n.Name}->{node.Name}") )
+				{
+					Canvas.AddEdge(n.Name, node.Name);
+					Drawn.Add($"{n.Name}->{node.Name}");
+
+					switch(n)
+					{
+						case InputNode input:
+							break;
+					}
+				}
 
 				AddEdges(node);
 			});
