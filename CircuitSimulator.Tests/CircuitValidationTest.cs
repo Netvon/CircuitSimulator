@@ -28,6 +28,9 @@ namespace CircuitSimulator.Tests
             i2.AddOutput(n1);
             n1.AddOutput(o1);
 
+            c.Add(n1);
+
+
             c.Accept(new CircuitConnectionValidatorVisitor());
 
             Assert.IsTrue(true);
@@ -48,6 +51,8 @@ namespace CircuitSimulator.Tests
 
             i1.AddOutput(n1);
             i2.AddOutput(n1);
+
+            c.Add(n1);
 
 
             Assert.ThrowsException<CircuitInvalidException>(() =>
