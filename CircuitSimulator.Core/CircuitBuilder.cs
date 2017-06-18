@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using CircuitSimulator.Core.Nodes;
+using CircuitSimulator.Core.Parser;
 
 namespace CircuitSimulator.Core
 {
@@ -41,7 +42,13 @@ namespace CircuitSimulator.Core
 			return AddNodeTypes(new[]
 			{
 				typeof(AndNode),
-				typeof(NotNode)
+				typeof(InputNode),
+				typeof(NandNode),
+				typeof(NorNode),
+				typeof(NotNode),
+				typeof(OrNode),
+				typeof(OutputNode),
+				typeof(XorNode)
 			});
 		}
 
@@ -55,7 +62,7 @@ namespace CircuitSimulator.Core
 			return this;
 		}
 
-		public Task<Circuit> Build()
+		public Task<ParsedCircuit> Build()
 		{
 			switch (storageType)
 			{
@@ -64,20 +71,18 @@ namespace CircuitSimulator.Core
 				case StorageType.File:
 					return BuildFromFile();
 				default:
-					return Task.FromException<Circuit>(new Exception("No Source was Added"));
+					throw new Exception("No Source was Added");
 			}
 
-			Task<Circuit> BuildFromMemory()
+			Task<ParsedCircuit> BuildFromMemory()
 			{
-				var parser = new CircuitParser()
-							.Parse(storageSource);
-
-				return Task.FromResult(new Circuit());
+				return Task.FromResult(new CircuitParser().Parse(storageSource));
 			}
 
-			Task<Circuit> BuildFromFile()
+			Task<ParsedCircuit> BuildFromFile()
 			{
-				return Task.FromResult(new Circuit());
+				return new CircuitParser()
+							.LoadFile(storageSource);
 			}
 		}
 	}

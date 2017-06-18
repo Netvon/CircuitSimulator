@@ -4,6 +4,7 @@ using CircuitSimulator.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using CircuitSimulator.Core.Nodes;
+using CircuitSimulator.Core.Parser;
 
 namespace CircuitSimulator.Tests
 {
@@ -30,7 +31,7 @@ B	:	INPUT_LOW	;
 OUT	:	PROBE		;
 
 B	:	A			;
-A	:	OUT			;").ToDictionary(v => v.name, v => v.value);
+A	:	OUT			;");
 
 			Assert.IsTrue(true);
 		}
@@ -43,7 +44,7 @@ A	:	OUT			;").ToDictionary(v => v.name, v => v.value);
 
 			Assert.ThrowsException<CircuitParserException>(() =>
 			{
-				var hallo = parser.ParseToDictionary(@"#A0:INPUT_HIGH;
+				var hallo = parser.Parse(@"#A0:INPUT_HIGH;
 # hallo
 A	::	INPUT_HIGH	;
 B	:	INPUT_LOW	;
