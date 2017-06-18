@@ -36,12 +36,17 @@ namespace CircuitSimulator.Client
 			{
 				if( !Drawn.Contains($"{n.Name}->{node.Name}") )
 				{
-					Canvas.AddEdge(n.Name, node.Name);
+					var edge = Canvas.AddEdge(n.Name, node.Name);
 					Drawn.Add($"{n.Name}->{node.Name}");
 
 					switch(n)
 					{
-						case InputNode input:
+						case Core.Nodes.Node input when input.Value == NodeCurrent.High:
+							edge.SourceNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleVioletRed;
+							break;
+
+						case Core.Nodes.Node input when input.Value == NodeCurrent.Low:
+							edge.SourceNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.LightBlue;
 							break;
 					}
 				}

@@ -9,6 +9,7 @@
 	<Grid>
 		<Button Content="Open File" Margin="10,10,0,0" Click="Button_Click" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75"/>
 		<WindowsFormsHost x:Name="FormsHost" Margin="10,43,10,10"/>
+		<Label x:Name="ErrorLabel" Content="" Margin="90,10,10,0" Padding="0,2" Height="20" VerticalAlignment="Top"/>
 
 
 	</Grid>

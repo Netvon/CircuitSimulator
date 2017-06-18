@@ -61,17 +61,23 @@ namespace CircuitSimulator.Client
 
 			if (ofd.ShowDialog() == true)
 			{
-				var builder = new CircuitBuilder();
-				var circuit = await builder.AddDefaultNodes()
-						.AddFileSource(ofd.FileName)
-						.Build();
+				try
+				{
+					var builder = new CircuitBuilder();
+					var circuit = await builder.AddDefaultNodes()
+							.AddFileSource(ofd.FileName)
+							.Build();
 
-				circuit.Accept(new CircuitConnectionValidatorVisitor());
-				//circuit.Accept(new CircuitLoopValidatorVisitor());
-				circuit.Accept(new DrawVisitor(graph));
-				viewer.Graph = graph;
+					circuit.Accept(new CircuitConnectionValidatorVisitor());
+					circuit.Accept(new CircuitLoopValidatorVisitor());
+					circuit.Accept(new DrawVisitor(graph));
+					viewer.Graph = graph;
 
-				circuit.Start();
+					circuit.Start();
+				} catch ( Exception ex )
+				{
+					ErrorLabel.Content = ex.Message;
+				}
 
 				var g =  "g";
 			}
