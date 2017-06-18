@@ -71,10 +71,13 @@ namespace CircuitSimulator.Client
 
 					circuit.Accept(new CircuitLoopValidatorVisitor());
 					circuit.Accept(new CircuitConnectionValidatorVisitor());
+
+					circuit.Start();
+
 					circuit.Accept(new DrawVisitor(graph));
 					viewer.Graph = graph;
 
-					circuit.Start();
+					
 				} catch ( Exception ex )
 				{
 					ErrorLabel.Content = ex.Message;
