@@ -20,7 +20,7 @@ namespace CircuitSimulator.Core
 
             if (circuit == null)
             {
-                throw new CircuitInvalidException();
+                throw new CircuitInvalidException("Probes kunnen niet bereikt worden");
             }
 
 
@@ -53,7 +53,7 @@ namespace CircuitSimulator.Core
             }
             else
             {
-                throw new CircuitInvalidException();
+                throw new CircuitInvalidException("Probes kunnen niet bereikt worden");
             }
         }
 

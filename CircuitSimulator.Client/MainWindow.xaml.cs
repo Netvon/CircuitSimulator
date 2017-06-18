@@ -94,8 +94,8 @@ namespace CircuitSimulator.Client
 				}
 				catch (Exception ex)
 				{
-					ErrorLabel.Content = ex.Message;
-				}
+					ErrorLabel.Content = "Error bij het valideren: " + ex.Message;
+				} 
 
 				var g = "g";
 			}

@@ -41,7 +41,10 @@ namespace CircuitSimulator.Client
 					var edge = Canvas.AddEdge(n.Name, node.Name);
 					Drawn.Add($"{n.Name}->{node.Name}");
 
-					switch(n)
+					edge.SourceNode.LabelText = $"{n.GetType().Name}\n{n.Name}";
+					edge.TargetNode.LabelText = $"{node.GetType().Name}\n{node.Name}";
+
+					switch (n)
 					{
 						case Core.Nodes.Node input when input.Value == NodeCurrent.High:
 							edge.SourceNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleVioletRed;

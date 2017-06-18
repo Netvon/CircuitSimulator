@@ -49,7 +49,7 @@ namespace CircuitSimulator.Core
                 {
                     if(node.GetHashCode() == code)
                     {
-                        throw new CircuitInvalidException();
+                        throw new CircuitInvalidException("Er is een oneindige loop gevonden");
                     }
 
                 }
