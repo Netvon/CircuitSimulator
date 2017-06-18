@@ -29,10 +29,8 @@ namespace CircuitSimulator.Core
             {
 
                 loopCheckList.Add(node.GetHashCode());
-                if (!LoopNodeTillName(node.OutputNodes))
-                {
-                    throw new CircuitInvalidException();
-                }
+                LoopNodeTillName(node.OutputNodes);
+                
                 loopCheckList.Clear();
 
             }
@@ -42,6 +40,8 @@ namespace CircuitSimulator.Core
         private bool LoopNodeTillName(List<Node> nodes)
         {
 
+
+
             foreach (var node in nodes)
             {
 
@@ -49,17 +49,17 @@ namespace CircuitSimulator.Core
                 {
                     if(node.GetHashCode() == code)
                     {
-                        return false;
+                        throw new CircuitInvalidException();
                     }
 
                 }
 
                 loopCheckList.Add(node.GetHashCode());
 
-                if(!LoopNodeTillName(node.OutputNodes))
-                {
-                    return false;
-                }
+                LoopNodeTillName(node.OutputNodes);
+                loopCheckList.Clear();
+
+
             }
 
             return true;

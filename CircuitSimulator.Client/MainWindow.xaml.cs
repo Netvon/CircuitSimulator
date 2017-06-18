@@ -68,8 +68,8 @@ namespace CircuitSimulator.Client
 							.AddFileSource(ofd.FileName)
 							.Build();
 
-					circuit.Accept(new CircuitConnectionValidatorVisitor());
 					circuit.Accept(new CircuitLoopValidatorVisitor());
+					circuit.Accept(new CircuitConnectionValidatorVisitor());
 					circuit.Accept(new DrawVisitor(graph));
 					viewer.Graph = graph;
 
