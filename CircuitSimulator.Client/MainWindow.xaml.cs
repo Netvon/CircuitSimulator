@@ -32,6 +32,11 @@ namespace CircuitSimulator.Client
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
+			await Run();
+		}
+
+		private async Task Run()
+		{
 			ErrorLabel.Content = "";
 			GViewer viewer = new GViewer()
 			{
@@ -46,7 +51,7 @@ namespace CircuitSimulator.Client
 			};
 			Graph graph = new Graph("graph");
 
-			
+
 
 			FormsHost.Child = viewer;
 			//Rectangle r = new Rectangle()
@@ -72,21 +77,28 @@ namespace CircuitSimulator.Client
 					circuit.Accept(new CircuitLoopValidatorVisitor());
 					circuit.Accept(new CircuitConnectionValidatorVisitor());
 
+					circuit.inputNodes.ForEach(inp =>
+					{
+						Inputs.Children.Add(new CheckBox()
+						{
+							Content = inp.Name
+						});
+					});
+
 					circuit.Start();
 
 					circuit.Accept(new DrawVisitor(graph));
 					viewer.Graph = graph;
 
-					
-				} catch ( Exception ex )
+
+				}
+				catch (Exception ex)
 				{
 					ErrorLabel.Content = ex.Message;
 				}
 
-				var g =  "g";
+				var g = "g";
 			}
-
-
 		}
 	}
 }

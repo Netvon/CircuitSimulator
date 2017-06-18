@@ -30,6 +30,8 @@ namespace CircuitSimulator.Client
             circuit.inputNodes.ForEach(node => AddEdges(node));
 		}
 
+
+
 		void AddEdges(Core.Nodes.Node n)
 		{
 			n.OutputNodes.ForEach(node =>
@@ -50,7 +52,7 @@ namespace CircuitSimulator.Client
 							break;
 					}
 
-					switch (n)
+					switch (node)
 					{
 						case Core.Nodes.Node input when input.Value == NodeCurrent.High:
 							edge.TargetNode.Attr.FillColor = Microsoft.Msagl.Drawing.Color.PaleVioletRed;
