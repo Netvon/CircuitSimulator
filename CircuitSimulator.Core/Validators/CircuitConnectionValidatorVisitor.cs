@@ -24,44 +24,36 @@ namespace CircuitSimulator.Core
             }
 
 
-            foreach (var input in circuit.inputNodes)
+            foreach (var input in circuit.nodes)
             {
 
-                if (!loopNodeToOutputs(input))
-                {
-                    throw new CircuitInvalidException();
-                }
-
+                loopNodeToOutputs(input);
+                
             }
 
         }
 
 
-        private bool loopNodeToOutputs(Node node)
+        private void loopNodeToOutputs(Node node)
         {
 
             if (node.GetType() == typeof(OutputNode))
             {
                 // Output reached
-                return true;
+                return;
             }
 
             if (node.OutputNodes.Count != 0)
             {
                 foreach (var output in node.OutputNodes)
                 {
-                    if (!this.loopNodeToOutputs(output))
-                    {
-                        // One node doesn't have an output
-                        return false;
-                    }
+                    this.loopNodeToOutputs(output);
                 }
 
-                return true;
             }
             else
             {
-                return false;
+                throw new CircuitInvalidException();
             }
         }
 
