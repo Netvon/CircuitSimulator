@@ -36,9 +36,11 @@ namespace CircuitSimulator.Core.Nodes
                 return;
             }
 
+            InputValues.Add(value);
+
             ProcessOutput(value);
 
-            if(InputCount == OutputNodes.Count)
+            if(InputCount == InputValues.Count)
             {
                 foreach (Node output in OutputNodes)
                 {
